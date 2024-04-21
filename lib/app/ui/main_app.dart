@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:max_app/app/routing/app_router.dart';
 import 'package:max_app/app/value/colors/app_colors.dart';
 import 'package:max_app/app/value/theme/app_text_theme.dart';
-import 'package:max_app/app/view/main_view.dart';
 import 'package:max_app/generated/l10n.dart';
 
 class MainApp extends StatelessWidget {
@@ -10,7 +10,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    late final appRoute = AppRouter();
+    
+    return MaterialApp.router(
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -28,7 +30,7 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.backgroundColor,
         textTheme: AppTextTheme(),
       ),
-      home: const MainView(),
+      routerConfig: appRoute.config(),
     );
   }
 }
