@@ -43,7 +43,9 @@ class UserViewState extends State<UserView> {
       }, errorBuilder: (context, error) {
         return Center(
             child: Text(
-                'Error: ${error.statusCode ?? ''} ${context.errorMessage(error)}  '));
+          'Error: ${error.statusCode ?? ''} ${context.errorMessage(error)}',
+          textAlign: TextAlign.center,
+        ));
       }, builder: (context, repos) {
         return Padding(
           padding: const EdgeInsets.all(16),

@@ -20,11 +20,13 @@ class SearchView extends StatefulWidget {
 
 class SearchViewState extends State<SearchView> {
   final TextEditingController _searchController = TextEditingController();
+  Map<String, dynamic> followersMap = <String, dynamic>{};
 
   @override
   void initState() {
     super.initState();
     _searchController.text = '';
+    followersMap.clear();
   }
 
   @override
@@ -54,7 +56,9 @@ class SearchViewState extends State<SearchView> {
         },
         errorBuilder: (context, error) => Center(
             child: Text(
-                'Error: ${error.statusCode ?? ''} ${context.errorMessage(error)}  ')),
+          'Error: ${error.statusCode ?? ''} ${context.errorMessage(error)}',
+          textAlign: TextAlign.center,
+        )),
       ),
     );
   }
@@ -91,6 +95,7 @@ class SearchViewState extends State<SearchView> {
         maxLines: 1,
         onFieldSubmitted: (value) {
           if (value.trim().isNotEmpty) {
+            followersMap.clear();
             context.read<SearchCubit>().getSearch(q: value);
           }
           context.router.maybePop(value);
@@ -101,39 +106,37 @@ class SearchViewState extends State<SearchView> {
   }
 
   Widget usersList({required SearchEntity searchResult}) {
-    return ListView.builder(
+    return ListView(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      itemCount: searchResult.items.length,
-      itemBuilder: (BuildContext context, int index) {
-        final user = searchResult.items[index];
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 35,
-            backgroundImage: NetworkImage(user.avatarUrl),
-          ),
-          title: Text(
-            user.login,
-            style: context.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          subtitle: followersSubtitle(login: user.login),
-          onTap: () => context.router.push(UserView(user: user)),
-        );
-      },
+      children: [
+        ...searchResult.items.map((user) {
+          context.read<FollowersCubit>().getFollowers(login: user.login);
+          return FollowersBuilder(
+              errorBuilder: (context, error) => const Text("_"),
+              loadingBuilder: (context) => const SizedBox.shrink(),
+              builder: (context, followers) {
+                followersMap[user.login] = "${followers.length}";
+                return userElement(user: user, followers: followers.length);
+              });
+        }),
+      ],
     );
   }
 
-  Widget followersSubtitle({
-    required String login,
-  }) {
-    context.read<FollowersCubit>().getFollowers(login: login);
-    return FollowersBuilder(
-      errorBuilder: (context, error) => const Text("_"),
-      loadingBuilder: (context) => const SizedBox.shrink(),
-      builder: (context, followers) {
-        return Text("${followers.length}");
-      },
+  Widget userElement({required UserEntity user, required int followers}) {
+    return ListTile(
+      onTap: () => context.router.push(UserView(user: user)),
+      leading: CircleAvatar(
+        radius: 35,
+        backgroundImage: NetworkImage(user.avatarUrl),
+      ),
+      title: Text(
+        user.login,
+        style: context.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: Text("followers: $followers"),
     );
   }
 

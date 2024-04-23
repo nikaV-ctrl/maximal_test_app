@@ -18,7 +18,7 @@ typedef FollowersErrorWidgetBuilder<E> = Widget Function(
   E error,
 );
 
-class FollowersBuilder extends StatelessWidget {
+class FollowersBuilder extends StatefulWidget {
   final FollowersValueWidgetBuilder<List<FollowersEntity>> builder;
   final FollowersLoadingWidgetBuilder loadingBuilder;
   final FollowersErrorWidgetBuilder<ErrorEntity> errorBuilder;
@@ -30,13 +30,18 @@ class FollowersBuilder extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<FollowersBuilder> createState() => _FollowersBuilderState();
+}
+
+class _FollowersBuilderState extends State<FollowersBuilder> {
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<FollowersCubit, FollowersState>(
       builder: (context, state) {
         return state.when(
-          data: (followers) => builder(context, followers),
-          waiting: () => loadingBuilder(context),
-          error: (error) => errorBuilder(context, error),
+          data: (followers) => widget.builder(context, followers),
+          waiting: () => widget.loadingBuilder(context),
+          error: (error) => widget.errorBuilder(context, error),
         );
       },
     );
