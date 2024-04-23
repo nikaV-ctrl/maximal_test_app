@@ -5,8 +5,12 @@ import 'package:max_app/app/routing/app_router.gr.dart';
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> routes = [
-    AutoRoute(page: MainView.page, path: '/'),
-    AutoRoute(page: SearchView.page, path: '/search'),
-    AutoRoute(page: UserView.page, path: '/user'),
+    AutoRoute(page: NavBarView.page, path: '/', children: [
+      AutoRoute(page: SearchNavigation.page, path: 'search', children: [
+        AutoRoute(page: SearchView.page, path: ''),
+        AutoRoute(page: UserView.page, path: 'user'),
+      ]),
+      AutoRoute(page: AuthView.page, path: 'auth'),
+    ]),
   ];
 }

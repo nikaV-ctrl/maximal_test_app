@@ -649,6 +649,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Введите имя пользователя`
+  String get searchHint {
+    return Intl.message(
+      'Введите имя пользователя',
+      name: 'searchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Нет пользователей с таким логином`
+  String get searchresultIsEmpty {
+    return Intl.message(
+      'Нет пользователей с таким логином',
+      name: 'searchresultIsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Репозитории`
+  String get repos {
+    return Intl.message(
+      'Репозитории',
+      name: 'repos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ветка по умолчанию: `
+  String get defaultBranch {
+    return Intl.message(
+      'Ветка по умолчанию: ',
+      name: 'defaultBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Последний коммит: `
+  String get lastCommit {
+    return Intl.message(
+      'Последний коммит: ',
+      name: 'lastCommit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -8,7 +8,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
   @override
   ErrorEntity handleSpecificError(error) {
     error as DioException;
-    if (baseErrorList.contains(error.error?.runtimeType)) {
+    if (baseErrorList.contains(error.runtimeType)) {
       return handleBaseError(error);
     }
     ErrorEntity errorEntity = ErrorEntity(errorState: ErrorState.unknown);
@@ -36,7 +36,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 400,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data['message']?.toString() ?? '',
             );
 
             break;
@@ -46,7 +46,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 401,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data['message']?.toString() ?? '',
             );
 
             break;
@@ -71,7 +71,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 401,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data?['message']?.toString() ?? '',
             );
 
             break;
@@ -81,7 +81,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 408,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data['message']?.toString() ?? '',
             );
 
             break;
@@ -91,7 +91,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 500,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data['message']?.toString() ?? '',
             );
 
             break;
@@ -101,7 +101,7 @@ class DioApiErrorHandler extends ApiErrorHandler {
               errorState: ErrorState.badResponse,
               statusCode: 503,
               message:
-                  error.response?.data['error']?['message']?.toString() ?? '',
+                  error.response?.data['message']?.toString() ?? '',
             );
 
             break;

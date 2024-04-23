@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ошибка соединения."),
         "connectionTimeout": MessageLookupByLibrary.simpleMessage(
             "Истекло время ожидания для установления соединения с сервером."),
+        "defaultBranch":
+            MessageLookupByLibrary.simpleMessage("Ветка по умолчанию: "),
         "errorOccurred":
             MessageLookupByLibrary.simpleMessage("Произошла ошибка"),
         "expectationFailed":
@@ -64,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Внутренняя ошибка сервера."),
         "ioException": MessageLookupByLibrary.simpleMessage(
             "Ошибка связана с операциями ввода-вывода."),
+        "lastCommit":
+            MessageLookupByLibrary.simpleMessage("Последний коммит: "),
         "lengthRequired":
             MessageLookupByLibrary.simpleMessage("Необходимо указать длину"),
         "locked": MessageLookupByLibrary.simpleMessage("Заблокировано"),
@@ -95,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Значение не попадает в допустимый диапазон, например, при доступе к элементам списка."),
         "receiveTimeout": MessageLookupByLibrary.simpleMessage(
             "Истекло время ожидания при получении данных от сервера."),
+        "repos": MessageLookupByLibrary.simpleMessage("Репозитории"),
         "requestCancel":
             MessageLookupByLibrary.simpleMessage("Запрос отменен."),
         "requestEntityTooLarge": MessageLookupByLibrary.simpleMessage(
@@ -106,6 +111,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedRangeNotSatisfiable": MessageLookupByLibrary.simpleMessage(
             "Диапазон не может быть обработан"),
         "search": MessageLookupByLibrary.simpleMessage("Поиск"),
+        "searchHint":
+            MessageLookupByLibrary.simpleMessage("Введите имя пользователя"),
+        "searchresultIsEmpty": MessageLookupByLibrary.simpleMessage(
+            "Нет пользователей с таким логином"),
         "sendTimeout": MessageLookupByLibrary.simpleMessage(
             "Истекло время ожидания при отправке данных серверу."),
         "serviceUnavailable":
