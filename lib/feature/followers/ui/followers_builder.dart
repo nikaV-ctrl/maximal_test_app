@@ -19,6 +19,7 @@ typedef FollowersErrorWidgetBuilder<E> = Widget Function(
 );
 
 class FollowersBuilder extends StatefulWidget {
+  final Function(int amountOfFollowers, String login) onSuccess;
   final FollowersValueWidgetBuilder<List<FollowersEntity>> builder;
   final FollowersLoadingWidgetBuilder loadingBuilder;
   final FollowersErrorWidgetBuilder<ErrorEntity> errorBuilder;
@@ -27,6 +28,7 @@ class FollowersBuilder extends StatefulWidget {
     required this.builder,
     required this.loadingBuilder,
     required this.errorBuilder,
+    required this.onSuccess,
   }) : super(key: key);
 
   @override
@@ -36,12 +38,24 @@ class FollowersBuilder extends StatefulWidget {
 class _FollowersBuilderState extends State<FollowersBuilder> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FollowersCubit, FollowersState>(
+    return BlocConsumer<FollowersCubit, FollowersState>(
+      listener: (context, state) {
+        state.when(
+          waiting: () {},
+          data: (followers, login) {
+            widget.onSuccess(followers.length, login);
+          },
+          error: (error) {},
+        );
+      },
       builder: (context, state) {
         return state.when(
-          data: (followers) => widget.builder(context, followers),
+          data: (followers, login) => widget.builder(context, followers),
           waiting: () => widget.loadingBuilder(context),
-          error: (error) => widget.errorBuilder(context, error),
+          error: (
+            error,
+          ) =>
+              widget.errorBuilder(context, error),
         );
       },
     );

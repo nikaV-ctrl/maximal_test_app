@@ -25,7 +25,7 @@ class FollowersCubit extends Cubit<FollowersState> {
       emit(const FollowersState.waiting());
       final List<FollowersEntity> followers =
           await followersRepository.getFollowers(login: login);
-      emit(FollowersState.data(followers: followers));
+      emit(FollowersState.data(followers: followers, login: login));
     } catch (error) {
       addError(error);
     }

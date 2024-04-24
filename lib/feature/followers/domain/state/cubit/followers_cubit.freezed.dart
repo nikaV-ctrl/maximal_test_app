@@ -19,21 +19,22 @@ mixin _$FollowersState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() waiting,
-    required TResult Function(List<FollowersEntity> followers) data,
+    required TResult Function(List<FollowersEntity> followers, String login)
+        data,
     required TResult Function(ErrorEntity error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? waiting,
-    TResult? Function(List<FollowersEntity> followers)? data,
+    TResult? Function(List<FollowersEntity> followers, String login)? data,
     TResult? Function(ErrorEntity error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? waiting,
-    TResult Function(List<FollowersEntity> followers)? data,
+    TResult Function(List<FollowersEntity> followers, String login)? data,
     TResult Function(ErrorEntity error)? error,
     required TResult orElse(),
   }) =>
@@ -119,7 +120,8 @@ class _$WaitingImpl implements _Waiting {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() waiting,
-    required TResult Function(List<FollowersEntity> followers) data,
+    required TResult Function(List<FollowersEntity> followers, String login)
+        data,
     required TResult Function(ErrorEntity error) error,
   }) {
     return waiting();
@@ -129,7 +131,7 @@ class _$WaitingImpl implements _Waiting {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? waiting,
-    TResult? Function(List<FollowersEntity> followers)? data,
+    TResult? Function(List<FollowersEntity> followers, String login)? data,
     TResult? Function(ErrorEntity error)? error,
   }) {
     return waiting?.call();
@@ -139,7 +141,7 @@ class _$WaitingImpl implements _Waiting {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? waiting,
-    TResult Function(List<FollowersEntity> followers)? data,
+    TResult Function(List<FollowersEntity> followers, String login)? data,
     TResult Function(ErrorEntity error)? error,
     required TResult orElse(),
   }) {
@@ -194,7 +196,7 @@ abstract class _$$DataImplCopyWith<$Res> {
           _$DataImpl value, $Res Function(_$DataImpl) then) =
       __$$DataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FollowersEntity> followers});
+  $Res call({List<FollowersEntity> followers, String login});
 }
 
 /// @nodoc
@@ -208,12 +210,17 @@ class __$$DataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? followers = null,
+    Object? login = null,
   }) {
     return _then(_$DataImpl(
       followers: null == followers
           ? _value._followers
           : followers // ignore: cast_nullable_to_non_nullable
               as List<FollowersEntity>,
+      login: null == login
+          ? _value.login
+          : login // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -221,7 +228,8 @@ class __$$DataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DataImpl implements _Data {
-  const _$DataImpl({required final List<FollowersEntity> followers})
+  const _$DataImpl(
+      {required final List<FollowersEntity> followers, required this.login})
       : _followers = followers;
 
   final List<FollowersEntity> _followers;
@@ -233,8 +241,11 @@ class _$DataImpl implements _Data {
   }
 
   @override
+  final String login;
+
+  @override
   String toString() {
-    return 'FollowersState.data(followers: $followers)';
+    return 'FollowersState.data(followers: $followers, login: $login)';
   }
 
   @override
@@ -243,12 +254,13 @@ class _$DataImpl implements _Data {
         (other.runtimeType == runtimeType &&
             other is _$DataImpl &&
             const DeepCollectionEquality()
-                .equals(other._followers, _followers));
+                .equals(other._followers, _followers) &&
+            (identical(other.login, login) || other.login == login));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_followers));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_followers), login);
 
   @JsonKey(ignore: true)
   @override
@@ -260,32 +272,33 @@ class _$DataImpl implements _Data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() waiting,
-    required TResult Function(List<FollowersEntity> followers) data,
+    required TResult Function(List<FollowersEntity> followers, String login)
+        data,
     required TResult Function(ErrorEntity error) error,
   }) {
-    return data(followers);
+    return data(followers, login);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? waiting,
-    TResult? Function(List<FollowersEntity> followers)? data,
+    TResult? Function(List<FollowersEntity> followers, String login)? data,
     TResult? Function(ErrorEntity error)? error,
   }) {
-    return data?.call(followers);
+    return data?.call(followers, login);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? waiting,
-    TResult Function(List<FollowersEntity> followers)? data,
+    TResult Function(List<FollowersEntity> followers, String login)? data,
     TResult Function(ErrorEntity error)? error,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(followers);
+      return data(followers, login);
     }
     return orElse();
   }
@@ -326,10 +339,12 @@ class _$DataImpl implements _Data {
 }
 
 abstract class _Data implements FollowersState {
-  const factory _Data({required final List<FollowersEntity> followers}) =
-      _$DataImpl;
+  const factory _Data(
+      {required final List<FollowersEntity> followers,
+      required final String login}) = _$DataImpl;
 
   List<FollowersEntity> get followers;
+  String get login;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -400,7 +415,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() waiting,
-    required TResult Function(List<FollowersEntity> followers) data,
+    required TResult Function(List<FollowersEntity> followers, String login)
+        data,
     required TResult Function(ErrorEntity error) error,
   }) {
     return error(this.error);
@@ -410,7 +426,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? waiting,
-    TResult? Function(List<FollowersEntity> followers)? data,
+    TResult? Function(List<FollowersEntity> followers, String login)? data,
     TResult? Function(ErrorEntity error)? error,
   }) {
     return error?.call(this.error);
@@ -420,7 +436,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? waiting,
-    TResult Function(List<FollowersEntity> followers)? data,
+    TResult Function(List<FollowersEntity> followers, String login)? data,
     TResult Function(ErrorEntity error)? error,
     required TResult orElse(),
   }) {

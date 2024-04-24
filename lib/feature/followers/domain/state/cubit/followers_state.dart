@@ -5,6 +5,7 @@ class FollowersState with _$FollowersState {
   const factory FollowersState.waiting() = _Waiting;
   const factory FollowersState.data({
     required List<FollowersEntity> followers,
+    required String login,
   }) = _Data;
   const factory FollowersState.error({
     required ErrorEntity error,

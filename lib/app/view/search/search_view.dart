@@ -111,33 +111,42 @@ class SearchViewState extends State<SearchView> {
       children: [
         ...searchResult.items.map((user) {
           context.read<FollowersCubit>().getFollowers(login: user.login);
-          return FollowersBuilder(
-              errorBuilder: (context, error) => const Text("_"),
-              loadingBuilder: (context) => const SizedBox.shrink(),
-              builder: (context, followers) {
-                followersMap[user.login] = "${followers.length}";
-                return userElement(user: user, followers: followers.length);
-              });
+          return userElement(
+            user: user,
+          );
         }),
       ],
     );
   }
 
-  Widget userElement({required UserEntity user, required int followers}) {
-    return ListTile(
-      onTap: () => context.router.push(UserView(user: user)),
-      leading: CircleAvatar(
-        radius: 35,
-        backgroundImage: NetworkImage(user.avatarUrl),
-      ),
-      title: Text(
-        user.login,
-        style: context.textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      subtitle: Text("followers: $followers"),
-    );
+  Widget userElement({required UserEntity user, int? followers}) {
+    return FollowersBuilder(
+        onSuccess: (amountOfFollowers, login) {
+          if (!followersMap.containsKey(login)) {
+            followersMap[login] = amountOfFollowers;
+          }
+        },
+        errorBuilder: (context, error) => const Text("_"),
+        loadingBuilder: (context) => const SizedBox.shrink(),
+        builder: (
+          context,
+          followers,
+        ) {
+          return ListTile(
+            onTap: () => context.router.push(UserView(user: user)),
+            leading: CircleAvatar(
+              radius: 35,
+              backgroundImage: NetworkImage(user.avatarUrl),
+            ),
+            title: Text(
+              user.login,
+              style: context.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            subtitle: Text("followers: ${followersMap[user.login] ?? 0}"),
+          );
+        });
   }
 
   Future onChanges(String text) async {
